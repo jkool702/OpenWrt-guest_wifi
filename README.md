@@ -7,7 +7,7 @@ The script supports both "standard" guest networks and guest networks that use O
 # Usage
 This script is almost fully automated, and using it is quite simple. To use this script, do the following:
 
-1. Download the script and save it somewhere on the router.
+1. Download the script `guest_wifi_setup.sh` and save it somewhere on the router.
       NOTE: If you are using OWE, the script *must* be saved on persistent storage. The OWE install requires a reboot mid-installation, and the script file needs to be available at the same location after this reboot happens.
 2. Fill in the `GuestWifi_{SSID,IP,netmask}` variables at the top of the script. 
 3. (optional) To force OWE support to be enabled/disabled, set `use_OWE_flag` to `1` or `0`. 
