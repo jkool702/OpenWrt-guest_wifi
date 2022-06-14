@@ -33,7 +33,7 @@ NOTE: the up/down commands enable/disable the wireless interfaces in UCI (via th
 # How the script sets everything up
 In setting up the guest wifi network, the following actions are performed:
 
-NOTE: a few of these steps are only done when setting up a guest ntwork with OWE support. These are labeled with the tag `(OWE ONLY)``
+NOTE: a few of these steps are only done when setting up a guest ntwork with OWE support. These are labeled with the tag `(OWE ONLY)`
 
 1. `network` config is setup in UCI. The script creates a bridge device called `br-guest` and guest interface called `guest`
 2. `wireless` config is setup in UCI.  The script sets up the guest wifi network interfaces. Two open interfaces are setup (one on the 2GHz radio, one on the 5 GHz radio). These will both use the same SSID (defined by the script variable `GuestWiFi_SSID`). Guests are isolated on all interfaces. All interfaces are (for the moment) disabled.
