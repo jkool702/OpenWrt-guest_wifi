@@ -1,3 +1,5 @@
+#!/bin/sh
+
 # set guest network SSID + router IP + netmask
 GuestWiFi_SSID='Guest_WiFi'
 GuestWiFi_IP='192.168.2.1'
