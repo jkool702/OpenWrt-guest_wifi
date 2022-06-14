@@ -28,7 +28,7 @@ service guest_wifi down   #  stop guest_wifi
 
 The command `service guest_wifi restart` is also supported. This will first check if the guest wifi network is running. If it is, it runs `wifi down; sleep 5; wifi up`.If it isn't, it runs the `up` command.
 
-NOTE: the up/down commands enable/disable the wireless interfaces in UCI (via the `disabled` option), **AND THEN IMPLEMENTS THE CHANGE BY RESTARTING THE ROUTER**. A notice will be printed to screen followed by a 10 second wait....If you do not want to immediately reboot the router, stop the running service (e.g. by pressing `ctrl` + `c`) before these 10 seconds are up. To prevent unncessary restarts, the up/down commands first check the guest wifi network state, and if it is already in the desired state then no action is performed. e.g., If the check determines the guest wifi is up and running properly, then running `service guest_wifi up` will not do anything (other than print some suggested actions that you can manually implement to the screen).
+NOTE: the up/down commands enable/disable the wireless interfaces in UCI (via the `disabled` option), **AND THEN IMPLEMENTS THE CHANGE BY RESTARTING THE ROUTER**. A notice will be printed to screen followed by a 10 second wait....If you do not want to immediately reboot the router, stop the running service (e.g. by pressing `ctrl` + `c`) before these 10 seconds are up.
 
 # How the script sets everything up
 In setting up the guest wifi network, the following actions are performed:
@@ -44,11 +44,19 @@ NOTE: a few of these steps are only done when setting up a guest ntwork with OWE
 6. `(OWE  ONLY)` The current `/etc/rc.local` is backup up to `/etc/rc.local.orig`, and a modified `/etc/rc.local` which automatically re-calls the script after reboot. A flag to signal script contuation is also setup via  `touch /root/guest-wifi-OWE-setup-2nd-reboot-flag`
 7. The guest wifi network is brought up via the (just installed) `guest_wifi`service. This culminates in the device rebooting. After which the guest wifi should be active.
 
------ END OF STANDARD GUEST WIFI SETUP -----
+*----- END OF STANDARD GUEST WIFI SETUP -----*
 
 8.  `(OWE  ONLY)` When the script is automatically re-called after rebooting (via `/etc/rc.local`), it will notice the flag at `/root/guest-wifi-OWE-setup-2nd-reboot-flag` and move to the appropiate place in the script. The script will pause for 20 seconds to allow the guest wifi time to come upo fully.
 9.  `(OWE  ONLY)` The script determines the BSSIDs of the guest network (which is currently running without explicitly defining them) and uses these to set `bssid` and `owe_transition_bssid` in the `wireless` UCI config. By setting the BSSID's used in UCI to be the same as the ones that are used by default, we ensure that the BSSIDs used are valid and wont cause problems.
 10.  `(OWE ONLY)` `/etc/rc.local` is restored to its original version, and the flag at `/root/guest-wifi-OWE-setup-2nd-reboot-flag` is removed.
 11.  `(OWE ONLY)` the router is rebooted to implement the new guest network configuration (with defined BSSIDs).
 
------ END OF OWE GUEST WIFI SETUP -----
+*----- END OF OWE GUEST WIFI SETUP -----*
+
+To prevent unncessary restarts, the `service guest_wifi {up,down}` commands first check the guest wifi network state, and if it is already in the desired state then no action is performed. e.g., If the check determines the guest wifi is up and running properly, then running `service guest_wifi up` will not do anything (other than print some suggested actions that you can manually implement to the screen).
+
+To determine if the guest wifi network is up/down, the following three checks are done:
+
+1. `wireless` UCI config: The `disabled` option from the UCI `wireless` config is checker. To be considered up, all guest interfaces must have a `disabled` value of `0`. To be considered down, they all must have a `disabled` value of `1`.
+2. `ifconfig`: To be considered up, all 2 (standard) or 4 (OWE) guest interfaces must be listed when running `ifconfig`. To be considered down, anone of the guest interfaces can be listed when running `ifconfig`. 
+3. `iw dev`:To be considered up, all 2 (standard) or 4 (OWE) guest interfaces must be listed when running `iw dev`. To be considered down, none of the guest interfaces can be listed when running `iw dev`.
