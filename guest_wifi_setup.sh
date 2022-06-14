@@ -1,6 +1,6 @@
 # set guest network SSID + router IP + netmask
 GuestWiFi_SSID='Guest_WiFi'
-GuestWiFi_IP='10.0.1.1'
+GuestWiFi_IP='192.168.2.1'
 GuestWiFi_netmask='255.255.255.0'
 
 # explicity set whether or not to use OWE 
