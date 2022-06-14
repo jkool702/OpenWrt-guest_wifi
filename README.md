@@ -10,7 +10,7 @@ This script is almost fully automated, and using it is quite simple. To use this
 1. Download the script and save it somewhere on the router.
       NOTE: If you are using OWE, the script *must* be saved on persistent storage. The OWE install requires a reboot mid-installation, and the script file needs to be available at the same location after this reboot happens.
 2. Fill in the `GuestWifi_{SSID,IP,netmask}` variables at the top of the script. 
-3. To force OWE support to be enabled/disabled, set `use_OWE_flag` to `1` or `0`. 
+3. (optional) To force OWE support to be enabled/disabled, set `use_OWE_flag` to `1` or `0`. 
       NOTE: if this variable is blank / undefined / anything other than 0 or 1; the default behavior is to use OWE if the "full" version of wpad or hostapd is installed, and not to use OWE if the mesh / mini / basic version is installed.
 4. `chmod +x` the script and run it. 
 5. Wait for the script to finish running. Your router will restart when it is done. 
