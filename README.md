@@ -43,9 +43,12 @@ NOTE: a few of these steps are only done when setting up a guest ntwork with OWE
 5. The `guest_wifi` service is installed to `/etc/init.d/guest_wifi`. This enables one to easily bring up/down the guest network.
 6. `(OWE  ONLY)` The current `/etc/rc.local` is backup up to `/etc/rc.local.orig`, and a modified `/etc/rc.local` which automatically re-calls the script after reboot. A flag to signal script contuation is also setup via  `touch /root/guest-wifi-OWE-setup-2nd-reboot-flag`
 7. The guest wifi network is brought up via the (just installed) `guest_wifi`service. This culminates in the device rebooting. After which the guest wifi should be active.
+
 ----- END OF STANDARD GUEST WIFI SETUP -----
+
 8.  `(OWE  ONLY)` When the script is automatically re-called after rebooting (via `/etc/rc.local`), it will notice the flag at `/root/guest-wifi-OWE-setup-2nd-reboot-flag` and move to the appropiate place in the script. The script will pause for 20 seconds to allow the guest wifi time to come upo fully.
 9.  `(OWE  ONLY)` The script determines the BSSIDs of the guest network (which is currently running without explicitly defining them) and uses these to set `bssid` and `owe_transition_bssid` in the `wireless` UCI config. By setting the BSSID's used in UCI to be the same as the ones that are used by default, we ensure that the BSSIDs used are valid and wont cause problems.
-10.  `(OWE ONLY)` `/etc/rc.local` is restord to its original version, and the flag at `/root/guest-wifi-OWE-setup-2nd-reboot-flag` is removed.
+10.  `(OWE ONLY)` `/etc/rc.local` is restored to its original version, and the flag at `/root/guest-wifi-OWE-setup-2nd-reboot-flag` is removed.
 11.  `(OWE ONLY)` the router is rebooted to implement the new guest network configuration (with defined BSSIDs).
+
 ----- END OF OWE GUEST WIFI SETUP -----
