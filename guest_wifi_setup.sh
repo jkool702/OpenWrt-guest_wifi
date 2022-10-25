@@ -217,7 +217,7 @@ start() {
 	then
 		echo "NOTICE: Guest Wifi already enabled in UCI config." >&2
 		
-		if [ "$(iw dev | grep ssid | grep "$(uci get wireless.guest_radio0.ssid)" | wc -l)" == '2' ] && [ "$(ifconfig | grep -E "$(echo $(iw dev | grep -E '(Interface)|(ssid)' | sed -zE s/'\n[ \t]+ssid'/' -- '/g | sed -E s/'^[ \t]*Interface '// | { grep "$(uci get wireless.guest_radio0.ssid)" || echo 'NONE -- NO MATCHES'; } | awk '{print $1}' | sed -E s/'(.*)'/'(\1)'/ ) | sed -E s/' '/'|'/g)" | wc -l)" == '2' ]; 
+		if [ "$(iw dev | grep ssid | grep "$(uci get wireless.guest_radio0.ssid)" | wc -l)" == '2' ] && [ "$(ifconfig | grep -E "$(echo $(echo $(iw dev | grep -E '(Interface)|(ssid)') | sed -E s/'Interface '/'\n'/g | grep -E '^.+$' | sed -E s/' ssid'/' -- '/g | { grep "$(uci get wireless.guest_radio0.ssid)" || echo 'NONE -- NO MATCHES'; } | awk '{print $1}' | sed -E s/'(.*)'/'(\1)'/ ) | sed -E s/' '/'|'/g)" | wc -l)" == '2' ]; 
 		then
 			echo -e "Guest network appears to be up and running. \nIf it is not working, try running 'service guest_wifi restart' to cycle wifi off and on. \nIf this does not work, try rebooting the router. \n" >&2
 		else
@@ -243,7 +243,7 @@ stop() {
 	then
 		echo "NOTICE: Guest Wifi already disabled in UCI config." >&2
 		
-		if [ "$(iw dev | grep ssid | grep "$(uci get wireless.guest_radio0.ssid)" | wc -l)" == '0' ] && [ "$(ifconfig | grep -E "$(echo $(iw dev | grep -E '(Interface)|(ssid)' | sed -zE s/'\n[ \t]+ssid'/' -- '/g | sed -E s/'^[ \t]*Interface '// | { grep "$(uci get wireless.guest_radio0.ssid)" || echo 'NONE -- NO MATCHES'; } | awk '{print $1}' | sed -E s/'(.*)'/'(\1)'/ ) | sed -E s/' '/'|'/g)" | wc -l)" == '0' ]; 
+		if [ "$(iw dev | grep ssid | grep "$(uci get wireless.guest_radio0.ssid)" | wc -l)" == '0' ] && [ "$(ifconfig | grep -E "$(echo $(echo $(iw dev | grep -E '(Interface)|(ssid)') | sed -E s/'Interface '/'\n'/g | grep -E '^.+$' | sed -E s/' ssid'/' -- '/g | { grep "$(uci get wireless.guest_radio0.ssid)" || echo 'NONE -- NO MATCHES'; } | awk '{print $1}' | sed -E s/'(.*)'/'(\1)'/ ) | sed -E s/' '/'|'/g)" | wc -l)" == '0' ]; 
 		then
 			echo -e "Guest network appears to be fully shut down \nIf it is still running or something else isnt working with the wifi, try rebooting the router. \n" >&2
 		else
@@ -265,7 +265,7 @@ stop() {
 }
 
 restart() {
-	if [ "$(echo $(uci show wireless | grep 'guest_radio' | grep 'disabled' | awk -F '=' '{print $2}' | sed -E s/"'"//g) | sed -E s/' '//g)" == '00' ] && [ "$(iw dev | grep ssid | grep "$(uci get wireless.guest_radio0.ssid)" | wc -l)" == '2' ] && [ "$(ifconfig | grep -E "$(echo $(iw dev | grep -E '(Interface)|(ssid)' | sed -zE s/'\n[ \t]+ssid'/' -- '/g | sed -E s/'^[ \t]*Interface '// | { grep "$(uci get wireless.guest_radio0.ssid)" || echo 'NONE -- NO MATCHES'; } | awk '{print $1}' | sed -E s/'(.*)'/'(\1)'/ ) | sed -E s/' '/'|'/g)" | wc -l)" == '2' ]; 
+	if [ "$(echo $(uci show wireless | grep 'guest_radio' | grep 'disabled' | awk -F '=' '{print $2}' | sed -E s/"'"//g) | sed -E s/' '//g)" == '00' ] && [ "$(iw dev | grep ssid | grep "$(uci get wireless.guest_radio0.ssid)" | wc -l)" == '2' ] && [ "$(ifconfig | grep -E "$(echo $(echo $(iw dev | grep -E '(Interface)|(ssid)') | sed -E s/'Interface '/'\n'/g | grep -E '^.+$' | sed -E s/' ssid'/' -- '/g | { grep "$(uci get wireless.guest_radio0.ssid)" || echo 'NONE -- NO MATCHES'; } | awk '{print $1}' | sed -E s/'(.*)'/'(\1)'/ ) | sed -E s/' '/'|'/g)" | wc -l)" == '2' ]; 
 	then
 		wifi down
 		sleep 5
@@ -301,7 +301,7 @@ start() {
 	then
 		echo "NOTICE: Guest Wifi already enabled in UCI config." >&2
 		
-		if [ "$(iw dev | grep ssid | grep "$(uci get wireless.guest_radio0.ssid)" | wc -l)" == '4' ] && [ "$(ifconfig | grep -E "$(echo $(iw dev | grep -E '(Interface)|(ssid)' | sed -zE s/'\n[ \t]+ssid'/' -- '/g | sed -E s/'^[ \t]*Interface '// | { grep "$(uci get wireless.guest_radio0.ssid)" || echo 'NONE -- NO MATCHES'; } | awk '{print $1}' | sed -E s/'(.*)'/'(\1)'/ ) | sed -E s/' '/'|'/g)" | wc -l)" == '4' ]; 
+		if [ "$(iw dev | grep ssid | grep "$(uci get wireless.guest_radio0.ssid)" | wc -l)" == '4' ] && [ "$(ifconfig | grep -E "$(echo $(echo $(iw dev | grep -E '(Interface)|(ssid)') | sed -E s/'Interface '/'\n'/g | grep -E '^.+$' | sed -E s/' ssid'/' -- '/g | { grep "$(uci get wireless.guest_radio0.ssid)" || echo 'NONE -- NO MATCHES'; } | awk '{print $1}' | sed -E s/'(.*)'/'(\1)'/ ) | sed -E s/' '/'|'/g)" | wc -l)" == '4' ]; 
 		then
 			echo -e "Guest network appears to be up and running. \nIf it is not working, try running 'service guest_wifi restart' to cycle wifi off and on. \nIf this does not work, try rebooting the router. \n" >&2
 		else
@@ -329,7 +329,7 @@ stop() {
 	then
 		echo "NOTICE: Guest Wifi already disabled in UCI config." >&2
 		
-		if [ "$(iw dev | grep ssid | grep "$(uci get wireless.guest_radio0.ssid)" | wc -l)" == '0' ] && [ "$(ifconfig | grep -E "$(echo $(iw dev | grep -E '(Interface)|(ssid)' | sed -zE s/'\n[ \t]+ssid'/' -- '/g | sed -E s/'^[ \t]*Interface '// | { grep "$(uci get wireless.guest_radio0.ssid)" || echo 'NONE -- NO MATCHES'; } | awk '{print $1}' | sed -E s/'(.*)'/'(\1)'/ ) | sed -E s/' '/'|'/g)" | wc -l)" == '0' ]; 
+		if [ "$(iw dev | grep ssid | grep "$(uci get wireless.guest_radio0.ssid)" | wc -l)" == '0' ] && [ "$(ifconfig | grep -E "$(echo $(echo $(iw dev | grep -E '(Interface)|(ssid)') | sed -E s/'Interface '/'\n'/g | grep -E '^.+$' | sed -E s/' ssid'/' -- '/g | { grep "$(uci get wireless.guest_radio0.ssid)" || echo 'NONE -- NO MATCHES'; } | awk '{print $1}' | sed -E s/'(.*)'/'(\1)'/ ) | sed -E s/' '/'|'/g)" | wc -l)" == '0' ]; 
 		then
 			echo -e "Guest network appears to be fully shut down \nIf it is still running or something else isnt working with the wifi, try rebooting the router. \n" >&2
 		else
@@ -353,7 +353,7 @@ stop() {
 }
 
 restart() {
-	if [ "$(echo $(uci show wireless | grep 'guest_radio' | grep 'disabled' | awk -F '=' '{print $2}' | sed -E s/"'"//g) | sed -E s/' '//g)" == '0000' ] && [ "$(iw dev | grep ssid | grep "$(uci get wireless.guest_radio0.ssid)" | wc -l)" == '4' ] && [ "$(ifconfig | grep -E "$(echo $(iw dev | grep -E '(Interface)|(ssid)' | sed -zE s/'\n[ \t]+ssid'/' -- '/g | sed -E s/'^[ \t]*Interface '// | { grep "$(uci get wireless.guest_radio0.ssid)" || echo 'NONE -- NO MATCHES'; } | awk '{print $1}' | sed -E s/'(.*)'/'(\1)'/ ) | sed -E s/' '/'|'/g)" | wc -l)" == '4' ]; 
+	if [ "$(echo $(uci show wireless | grep 'guest_radio' | grep 'disabled' | awk -F '=' '{print $2}' | sed -E s/"'"//g) | sed -E s/' '//g)" == '0000' ] && [ "$(iw dev | grep ssid | grep "$(uci get wireless.guest_radio0.ssid)" | wc -l)" == '4' ] && [ "$(ifconfig | grep -E "$(echo $(echo $(iw dev | grep -E '(Interface)|(ssid)') | sed -E s/'Interface '/'\n'/g | grep -E '^.+$' | sed -E s/' ssid'/' -- '/g | { grep "$(uci get wireless.guest_radio0.ssid)" || echo 'NONE -- NO MATCHES'; } | awk '{print $1}' | sed -E s/'(.*)'/'(\1)'/ ) | sed -E s/' '/'|'/g)" | wc -l)" == '4' ]; 
 	then
 		wifi down
 		sleep 5
@@ -402,7 +402,7 @@ else
 	echo "Running 2nd part setup script -- required to set OWE BSSID's" >&2
 
 	kk=0
-	iwinfo | sed -zE s/'\n[ \t]*Access Point\: '/' \-\- '/g | grep ESSID | grep "${GuestWiFi_SSID}" | awk -F '--' '{print $2}' | while read -r nn; 
+	iwinfo | grep -E '^[ \t]*Access Point:' | sed -E s/'^[ \t]*Access Point:'// | while read -r nn; 
 	do
 		if [ "${kk}" == '0' ]; then
 				uci set wireless.guest_radio0.bssid="${nn}"
@@ -436,4 +436,3 @@ fi
 
 sleep 5
 reboot
-
